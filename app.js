@@ -1,4 +1,4 @@
-// Web Server
+// Web Server http://localhost:3000
 const http = require("http");
 const fs = require("fs");
 const port = 3000;
@@ -14,8 +14,15 @@ http
     const url = req.url;
     // const url apapun yg dikembalikan dari request, ambil url nya
     if (url === "/about") {
-      res.write("<h1>Ini Adalah halaman About</h1>");
-      res.end();
+      fs.readFile("./about.html", (err, data) => {
+        if (err) {
+          res.writeHead(404);
+          res.write("Error: file not found");
+        } else {
+          res.write(data);
+        }
+        res.end();
+      });
     } else if (url == "/contact") {
       res.write("<h2>Ini Adalah Halaman Contact");
       res.end();
