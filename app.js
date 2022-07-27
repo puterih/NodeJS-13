@@ -1,5 +1,6 @@
 // Web Server
 const http = require("http");
+const fs = require("fs");
 const port = 3000;
 
 // web server yg sederhana
@@ -18,6 +19,17 @@ http
     } else if (url == "/contact") {
       res.write("<h2>Ini Adalah Halaman Contact");
       res.end();
+    } else {
+      // res.write('Hello World!');
+      fs.readFile("./index.html", (err, data) => {
+        if (err) {
+          res.writeHead(404);
+          res.write("Error: file not found");
+        } else {
+          res.write(data);
+        }
+        res.end();
+      });
     }
   })
   .listen(port, () => {
